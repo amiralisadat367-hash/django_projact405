@@ -1,9 +1,14 @@
 asgiref==3.12.1
 Django==6.1.1
 djangorestframework==3.18.1
+djangorestframework_simplejwt==5.5.1
 drf-yasg==1.21.15
 inflection==0.5.1
 packaging==26.3
+pillow==12.3.0
+psycopg==3.3.6
+psycopg-binary==3.3.6
+PyJWT==2.15.1
 pytz==2026.4
 PyYAML==6.0.3
 sqlparse==0.6.0
