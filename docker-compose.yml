@@ -4,14 +4,39 @@ services:
     container_name: postgres
     restart: unless-stopped
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
     environment:
       POSTGRES_DB: shop_db
       POSTGRES_USER: shapoor
-      POSTGRES_PASSWORD: botcampapi
+      POSTGRES_PASSWORD: "botcampapi"
     ports:
       - "127.0.0.1:5432:5432"
-    
+  web:
+    build: .
+    container_name: kingshp_web
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+      - static_volume:/code/staticfiles
+      - media_volume:/code/media
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=1
+      - DATABASE_URL=postgres://shapoor:botcampapi@db:5432/shop_db
+    depends_on:
+      - db
+  redis:
+    image: redis:7-alpine
+    container_name: kingshp_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
 
 volumes:
   postgres_data:
+  static_volume:
+  media_volume:
+  redis_data:
